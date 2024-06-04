@@ -1,0 +1,33 @@
+# Using docker desktop version 4.30.0
+services:
+  ollama:
+    image: ollama/ollama
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama:/root/.ollama
+    restart: unless-stopped
+    # Uncomment to enable NVIDIA based GPU usage
+    # ======= Enable GPU Usage =======
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - capabilities: ["gpu"]
+    # ======= Enable GPU Usage =======
+
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: open-webui
+    ports:
+      - "8282:8080"
+    extra_hosts:
+    - "host.docker.internal:host-gateway"
+    volumes:
+      - open-webui:/app/backend/data
+    restart: unless-stopped
+    
+volumes:
+  open-webui:
+  ollama:
