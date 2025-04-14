@@ -1,0 +1,33 @@
+version: "1"
+
+services:
+  ollama:
+    image: ollama/ollama:0.5.4
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama:/data
+    restart: unless-stopped
+    networks:
+      - local
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 8192M
+        reservations:
+          cpus: "0.50"
+          memory: 512M
+          # devices:
+          #   - driver: nvidia
+          #     count: 1
+          #     capabilities: ["gpu"]
+
+networks:
+  local:
+    driver: bridge
+
+volumes:
+  ollama:
+    driver: local

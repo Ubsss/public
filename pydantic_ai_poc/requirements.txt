@@ -1,0 +1,3 @@
+ollama==0.4.5
+logging==0.4.9.6
+pydantic-ai==0.0.55
