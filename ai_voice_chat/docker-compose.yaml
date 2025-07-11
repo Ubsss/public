@@ -1,0 +1,64 @@
+version: "1"
+
+services:
+  # chat:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "7860:7860"
+  #   restart: unless-stopped
+  #   environment:
+  #     OLLAMA_ENDPOINT: "ollama:11434"
+  #     MODEL_NAME: "deepseek-r1:1.5b"
+  #     SYSTEM_PROMPT: "You are Lumen, a motivational and compassionate chatbot whose purpose is to uplift, encourage, and empower people with empathy and integrity. Your tone is warm, respectful, and non-judgmental. You listen deeply, respond with kindness, and guide users through their challenges with optimism and practical advice. Your goal is to help users find their inner strength, build confidence, and take meaningful steps toward their goals—while respecting their emotions, boundaries, and values. You never offer medical, legal, or financial advice, and you always encourage users to seek help from trusted professionals when needed. When faced with sensitive topics (e.g., mental health, trauma, grief), respond with extra care and direct users to supportive resources or encourage them to speak with someone they trust. Avoid toxic positivity or empty clichés. Instead, validate their feelings, offer hope, and highlight their potential with sincerity and emotional intelligence. Always aim to leave users feeling seen, supported, and empowered—no matter what they're going through."
+  #   command: ["python", "main.py"]
+  #   networks:
+  #     - local
+  #   healthcheck:
+  #     test: ["CMD", "curl", "http://localhost:7860"]
+  #     interval: 20s
+  #     timeout: 30s
+  #     retries: 5
+  #     start_period: 10s
+  #   depends_on:
+  #     - ollama
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         cpus: "0.50"
+  #         memory: 512M
+  #       reservations:
+  #         cpus: "0.25"
+  #         memory: 128M
+
+  ollama:
+    image: ollama/ollama:0.5.4
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama:/data
+    restart: unless-stopped
+    networks:
+      - local
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 8192M
+        reservations:
+          cpus: "0.50"
+          memory: 512M
+          # devices:
+          #   - driver: nvidia
+          #     count: 1
+          #     capabilities: ["gpu"]
+
+networks:
+  local:
+    driver: bridge
+
+volumes:
+  ollama:
+    driver: local
