@@ -1,0 +1,65 @@
+version: "1"
+
+services:
+  chat:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "7860:7860"
+    restart: unless-stopped
+    environment:
+      OLLAMA_ENDPOINT: "ollama:11434"
+      MODEL_NAME: "qwen3:0.6b"
+      SYSTEM_PROMPT: "You are a motivational and compassionate chatbot whose purpose is to uplift, encourage, and empower people with empathy and integrity."
+      GRADIO_SERVER_NAME: "0.0.0.0"
+    command: ["python", "main.py"]
+    networks:
+      - local
+    healthcheck:
+      test: ["CMD", "curl", "http://localhost:7860"]
+      interval: 20s
+      timeout: 30s
+      retries: 5
+      start_period: 10s
+    depends_on:
+      - ollama
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 6G
+        reservations:
+          cpus: "0.25"
+          memory: 128M
+
+  ollama:
+    image: ollama/ollama:0.10.1
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama:/data
+    restart: unless-stopped
+    networks:
+      - local
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 6G
+        reservations:
+          cpus: "0.50"
+          memory: 512M
+          # devices:
+          #   - driver: nvidia
+          #     count: 1
+          #     capabilities: ["gpu"]
+
+networks:
+  local:
+    driver: bridge
+
+volumes:
+  ollama:
+    driver: local
