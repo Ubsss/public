@@ -1,4 +1,4 @@
-numpy
 fastrtc[vad, tts, stt]
 ollama
 logging
+pydantic-ai
