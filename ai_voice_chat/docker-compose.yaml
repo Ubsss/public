@@ -10,7 +10,7 @@ services:
     restart: unless-stopped
     environment:
       OLLAMA_ENDPOINT: "ollama:11434"
-      MODEL_NAME: "qwen3:0.6b"
+      MODEL_NAME: "gemma3:1b"
       SYSTEM_PROMPT: "You are a motivational and compassionate chatbot whose purpose is to uplift, encourage, and empower people with empathy and integrity."
       GRADIO_SERVER_NAME: "0.0.0.0"
     command: ["python", "main.py"]
@@ -27,10 +27,10 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "2"
-          memory: 6G
+          cpus: "4"
+          memory: 4G
         reservations:
-          cpus: "0.25"
+          cpus: "1"
           memory: 128M
 
   ollama:
@@ -47,7 +47,7 @@ services:
       resources:
         limits:
           cpus: "2"
-          memory: 6G
+          memory: 3G
         reservations:
           cpus: "0.50"
           memory: 512M

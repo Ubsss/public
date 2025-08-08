@@ -20,7 +20,7 @@ A completely local AI chat bot power by large language models. [Docker](https://
 #### Start steps
 1. Start the docker daemon 
 2. Navigate to project root directory using a bash terminal and run ```bash run.sh```
-3. Access the application by navigating to [127.0.0.1:7860](http://127.0.0.1:7860)
+3. Once docker logs include "chat-1  | * Running on local URL:  http://0.0.0.0:7860", access the application by navigating to [127.0.0.1:7860](http://127.0.0.1:7860)
 
 #### Stop steps
 1. Navigate to bash terminal currently running the project and run ```ctl + c```
@@ -33,6 +33,7 @@ A completely local AI chat bot power by large language models. [Docker](https://
 
 #### Resources
 - Docker daemon start [guide](https://docs.docker.com/config/daemon/start/)
+- Nvidia Cuda [download](https://developer.nvidia.com/cuda-downloads)
 
 #### Troubleshooting
 ###### Windows operating system
